@@ -1,0 +1,5 @@
+# React + TypeScript + Vite
+
+APLICACION DE CRUD DE PELICULAS EN REACT
+
+

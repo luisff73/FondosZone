@@ -4,6 +4,7 @@ import FormNewFilm from './FormNewFilm.tsx';
 import GridFilms from './GridFilms.tsx';
 import GridFilmsGeneros from "./GridFilmsGeneros.tsx";
 import {AgregarGenero, crearGenero} from './AgregarGenero.tsx';
+import StockData from './components/stockData.tsx'; // Importa el nuevo componente
 
 // Componente principal de la aplicación
 
@@ -46,6 +47,8 @@ function App() {
           setPeliculas={setPeliculas} 
           setPeliculaSeleccionada={setPeliculaSeleccionada} // Cuando se hace click en actualizar, seteamos la película seleccionada
         />
+        {/* Mostrar datos de la API de Yahoo Finance */}
+        <StockData />
       </div>
 
     </main>

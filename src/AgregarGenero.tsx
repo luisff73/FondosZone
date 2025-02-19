@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { interfaceGeneros } from './App';
+import { interfaceGeneros } from './definitions';
 
 // Función para crear un nuevo género
 const crearGenero = (name: string, setGeneros: React.Dispatch<React.SetStateAction<interfaceGeneros[]>>) => {
@@ -19,9 +19,9 @@ const crearGenero = (name: string, setGeneros: React.Dispatch<React.SetStateActi
     .catch((error) => console.error("Error al crear el género:", error));
 };
 
-const AgregarGenero = ({ setGeneros, crearGenero }: { 
-  setGeneros: React.Dispatch<React.SetStateAction<interfaceGeneros[]>>; 
-  crearGenero: (name: string, setGeneros: React.Dispatch<React.SetStateAction<interfaceGeneros[]>>) => void 
+const AgregarGenero = ({ setGeneros, crearGenero }: {
+  setGeneros: React.Dispatch<React.SetStateAction<interfaceGeneros[]>>;
+  crearGenero: (name: string, setGeneros: React.Dispatch<React.SetStateAction<interfaceGeneros[]>>) => void
 }) => {
   const [nombreGenero, setNombreGenero] = useState("");
 

@@ -12,13 +12,13 @@ const StockDataComponent = () => {
   // Transforma los datos de la API para la gráfica
   const transformData = (apiData: any): { date: string; price: number }[] => {
     if (!apiData || !apiData.chart || !apiData.chart.result) return [];
-    console.log("API Data:", apiData);
+    // console.log("API Data:", apiData);
     const result = apiData.chart.result[0];
-    console.log("Result:", result);
+    // console.log("Result:", result);
     const timestamps = result.timestamp;
-    console.log("Timestamps:", timestamps);
+    // console.log("Timestamps:", timestamps);
     const prices = result.indicators.quote[0].close;
-    console.log("Prices:", prices);
+    // console.log("Prices:", prices);
     return timestamps.map((timestamp: number, index: number) => ({
       date: new Date(timestamp * 1000).toLocaleDateString(),
       price: prices[index],

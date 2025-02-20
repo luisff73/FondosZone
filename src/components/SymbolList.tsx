@@ -6,7 +6,7 @@ interface SymbolListProps {
 
 const SymbolList: React.FC<SymbolListProps> = ({ onSelectSymbol }) => {
   // Lista de símbolos de acciones
-  const symbols = ["AAPL", "IBM", "GOOGL", "MSFT", "AMZN"];
+  const symbols = ["AAPL", "IBM", "GOOGL", "MSFT", "AMZN", "TSLA", "FB", "TWTR", "NFLX", "INTC", "CSCO", "NVDA",  "BABA"];
 
   return (
     <div className="mb-8">

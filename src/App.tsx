@@ -34,7 +34,7 @@ function App() {
           crearGenero={crearGenero}
         />
 
-        {/* Grid que muestra todos los generos */} //
+        {/* Grid que muestra todos los generos */} 
         <GridFilmsGeneros
           generos={generos}
           setGeneros={setGeneros}

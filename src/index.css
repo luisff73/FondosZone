@@ -1,3 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Inter:wght@400;700&family=Lusitana:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+;
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:root {
+  --bg-color-100: #e6dfc8;
+  --bg-color-200: #d6d0a5;
+  --bg-color-400: #a8af4c;
+  --bg-color-500: #7d8e38;
+  --bg-color-600: #717d2e;
+  --bg-color-700: #565e1b;
+}
+

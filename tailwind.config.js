@@ -11,7 +11,7 @@ export const theme = {
       inter: ['Inter', 'sans-serif'],
     },
     colors: {
-      green: {
+      color: {
         100: "var(--bg-color-100)",
         200: "var(--bg-color-200)",
         400: "var(--bg-color-400)",

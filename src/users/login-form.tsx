@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 export default function LoginForm() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') || '/page';
 
   // Estado para manejar errores y carga (simulación)
   const [errorMessage] = useState<string | null>(null);

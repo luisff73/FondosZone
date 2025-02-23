@@ -20,11 +20,11 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 :root {
-  --bg-color-100: #e6dfc8;
-  --bg-color-200: #d6d0a5;
-  --bg-color-400: #a8af4c;
-  --bg-color-500: #7d8e38;
-  --bg-color-600: #717d2e;
-  --bg-color-700: #565e1b;
+  --bg-color-100: #c8d3e6;
+  --bg-color-200: #a5b3d6;
+  --bg-color-400: #4c60af;
+  --bg-color-500: #38458e;
+  --bg-color-600: #2e4e7d;
+  --bg-color-700: #1b375e;
 }
 

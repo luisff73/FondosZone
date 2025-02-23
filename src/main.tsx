@@ -1,14 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { BrowserRouter } from 'react-router-dom'
-//import App from './App.tsx'
-import LoginForm from './users/login-form.tsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import AuthProviderWrapper from '../authProvider';
+import AppRoutes from '../AppRoutes';  // Asegúrate de importar AppRoutes en lugar de App
 
-createRoot(document.getElementById('root')!).render(  // esto renderizara todo el contenido en el div "root" de index html y construira la pagina
-  <StrictMode> 
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <BrowserRouter>
-    <LoginForm />
+      <AuthProviderWrapper>
+        <AppRoutes />  {/* Aquí se debe usar AppRoutes para proteger todas las rutas*/}
+      </AuthProviderWrapper>
     </BrowserRouter>
-  </StrictMode>,
-)
+  </StrictMode>
+);
+

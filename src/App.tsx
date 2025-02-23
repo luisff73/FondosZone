@@ -5,10 +5,14 @@ import GridFilms from './GridFilms.tsx';
 import GridFilmsGeneros from "./GridFilmsGeneros.tsx";
 import { AgregarGenero, crearGenero } from './AgregarGenero.tsx';
 import { interfacePelicula, interfaceGeneros } from "./definitions"; // Importamos las interfaces de pelicula y generos
+// import { Routes, Route } from 'react-router-dom';
+// import LoginPage from './users/login';
+// import RegisterForm from './users/register-form';
 
 // Componente principal de la aplicación
 
-function App() {
+export default function App() {
+  console.log("entrando en app");
   const [peliculas, setPeliculas] = useState<interfacePelicula[]>([]); // Estado para almacenar las películas "peliculas" es una variable que almacenara las peliculas y setPeliculas lo utilizamos para actualizar el valor de la variable Peliculas
   const [peliculaSeleccionada, setPeliculaSeleccionada] = useState<interfacePelicula | null>(null); // Estado para almacenar la película seleccionada para actualizar la asignamos a null al principio.
   const [generos, setGeneros] = useState<interfaceGeneros[]>([]);
@@ -34,7 +38,7 @@ function App() {
           crearGenero={crearGenero}
         />
 
-        {/* Grid que muestra todos los generos */} 
+        {/* Grid que muestra todos los generos */}
         <GridFilmsGeneros
           generos={generos}
           setGeneros={setGeneros}
@@ -51,8 +55,26 @@ function App() {
 
     </main>
   );
+
+  // return (
+  //   <><div>
+  //     <h1>¡Bienvenido a la App!</h1>
+  //   </div><div className="flex min-h-screen flex-col">
+  //       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+  //         <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+  //           <Routes>
+  //             <Route path="/" element={<LoginPage />} />
+  //             <Route path="/login" element={<LoginPage />} />
+  //             <Route path="/register" element={<RegisterForm />} />
+  //             <Route path="/app/*" element={<App />} />
+  //           </Routes>
+  //         </div>
+  //       </div>
+  //     </div></>
+  // );
+
+
 }
 
 
 
-export default App;

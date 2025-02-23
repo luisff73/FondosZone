@@ -1,0 +1,156 @@
+import express, { Request, Response, Router, Express } from "express";
+import cors from "cors";
+import { authController } from "./controllers/auth.controller";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GitHubStrategy } from "passport-github2";
+import dotenv from "dotenv";
+import { Profile } from "passport";
+dotenv.config({ path: ".env.local" });
+import session from "express-session";
+
+const app: Express = express();
+const authRouter: Router = express.Router();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "tu_secreto_aqui",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // 24 horas
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+// Configuración de Passport para Google
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      callbackURL: "http://localhost:3000/api/auth/google/callback",
+    },
+    async (_accessToken, _refreshToken, profile, done) => {
+      try {
+        const user = {
+          name: profile.displayName,
+          email: profile.emails?.[0]?.value || "",
+          googleId: profile.id,
+        };
+        return done(null, user);
+      } catch (error) {
+        return done(error as Error, undefined);
+      }
+    }
+  )
+);
+
+// Configuración de Passport para GitHub
+
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+      callbackURL: "http://localhost:3000/api/auth/github/callback",
+    },
+    async (
+      _accessToken: string,
+      _refreshToken: string,
+      profile: Profile, // ✅ Usa `Profile` en lugar de `any`
+      done: (error: Error | null, user?: Express.User | false) => void
+    ) => {
+      try {
+        const user = {
+          name: profile.displayName || profile.username,
+          email: profile.emails?.[0]?.value || "",
+          githubId: profile.id,
+        };
+        return done(null, user);
+      } catch (error) {
+        return done(error as Error, undefined);
+      }
+    }
+  )
+);
+
+// Rutas de autenticación
+authRouter.post(
+  "/login",
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      await authController.login(req, res);
+    } catch (error) {
+      res.status(500).json({ error: "Error en el servidor " + error });
+    }
+  }
+);
+
+authRouter.post(
+  "/register",
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      await authController.register(req, res);
+    } catch (error) {
+      res.status(500).json({ error: "Error en el registro " + error });
+    }
+  }
+);
+
+// Rutas para autenticación con Google
+authRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (_req, res) => {
+    res.redirect("http://localhost:4173/app");
+  }
+);
+
+// Rutas para autenticación con GitHub
+authRouter.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+authRouter.get(
+  "/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  (_req, res) => {
+    res.redirect("http://localhost:4173/app");
+  }
+);
+
+// Montar el router en /api/auth
+app.use("/api/auth", authRouter);
+
+// Iniciar servidor
+const PORT: number = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor ejecutándose en el puerto ${PORT}`);
+});
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser(
+  (
+    user: Express.User,
+    done: (err: unknown, user: Express.User | false | null) => void
+  ) => {
+    done(null, user);
+  }
+);
+
+export default app;

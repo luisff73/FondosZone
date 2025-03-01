@@ -108,6 +108,19 @@ authRouter.post(
   }
 );
 
+authRouter.post(
+  "/verificayRegistra", // Asegúrate de que esta ruta esté configurada correctamente
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      await authController.verificayRegistra(req, res); // Llama a la función verificayRegistra del controlador
+    } catch (error) {
+      res.status(500).json({
+        error: "Error en el proceso de verificación y registro " + error,
+      });
+    }
+  }
+);
+
 // Rutas para autenticación con Google
 authRouter.get(
   "/google",

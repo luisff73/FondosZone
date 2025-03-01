@@ -5,6 +5,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import dotenv from "dotenv";
+import { db } from "./db/queries"; // Importamos las consultas
 import { Profile } from "passport";
 dotenv.config({ path: ".env.local" });
 import session from "express-session";
@@ -38,11 +39,13 @@ passport.use(
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
-        const user = {
-          name: profile.displayName,
-          email: profile.emails?.[0]?.value || "",
-          googleId: profile.id,
-        };
+        const email = profile.emails?.[0]?.value || "";
+        const name = profile.displayName;
+        const user = await db.findOrCreateUser(
+          name,
+          email,
+          profile.photos?.[0]?.value || ""
+        );
         return done(null, user);
       } catch (error) {
         return done(error as Error, undefined);
@@ -67,11 +70,13 @@ passport.use(
       done: (error: Error | null, user?: Express.User | false) => void
     ) => {
       try {
-        const user = {
-          name: profile.displayName || profile.username,
-          email: profile.emails?.[0]?.value || "",
-          githubId: profile.id,
-        };
+        // Asegúrate de que `name` tenga un valor válido (cualquiera que no sea undefined)
+        const name = profile.displayName || profile.username || "UsuarioGithub"; // Usa una cadena vacía si displayName o username es undefined
+        const email = profile.emails?.[0]?.value ?? profile.username ?? ""; // Usa una cadena vacía si el email es undefined
+        const picture = profile.photos?.[0]?.value || ""; // Usa una cadena vacía si la foto es undefined
+        // llamamos a la funcion de Buscar o insertar en la BD el usuario
+        const user = await db.findOrCreateUser(name, email, picture);
+
         return done(null, user);
       } catch (error) {
         return done(error as Error, undefined);

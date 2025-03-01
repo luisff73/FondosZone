@@ -33,6 +33,37 @@ export class DatabaseQueries {
     return this.pool.query<User>(query, [email]);
   }
 
+  async getUserByEmailSocialLogin(email: string): Promise<User | null> {
+    const query = `
+      SELECT * FROM users
+      WHERE email = $1
+    `;
+    const result = await this.pool.query<User>(query, [email]);
+    return result.rows.length ? result.rows[0] : null; // Devuelve el primer usuario o null
+  }
+
+  async findOrCreateUser(
+    name: string,
+    email: string,
+    profile_picture_url: string
+  ): Promise<User> {
+    let user = await this.getUserByEmailSocialLogin(email);
+    if (!user) {
+      const query = `
+        INSERT INTO users (name, email, password, type, profile_picture_url)
+        VALUES ($1, $2, 'Social_login', 'social', $3)
+        RETURNING *
+      `;
+      const result = await this.pool.query<User>(query, [
+        name,
+        email,
+        profile_picture_url,
+      ]);
+      user = result.rows[0];
+    }
+    return user;
+  }
+
   // Consultas de fondos
   async getFondos(): Promise<QueryResult<Fondo>> {
     const query = `

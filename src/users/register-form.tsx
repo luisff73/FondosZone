@@ -7,7 +7,7 @@ import { registerUser } from '../../auth';
 import axios, { AxiosError } from 'axios';
 
 export default function RegisterForm() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const [isPending, setIsPending] = useState(false);
     const [isVerificationModalVisible, setIsVerificationModalVisible] = useState(false);
     const [verificationCode, setVerificationCode] = useState('');

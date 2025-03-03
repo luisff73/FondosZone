@@ -1,23 +1,18 @@
 //import { Pool, PoolConfig, QueryResult } from 'pg';
-import pkg from "pg";
-const { Pool } = pkg;
+
+import { Pool, PoolConfig } from "pg";
 
 import dotenv from "dotenv"; // Importar el módulo dotenv para leer variables de entorno
 
 dotenv.config();
 
-interface DatabaseConfig {
-  connectionString: string;
-  ssl: {
-    rejectUnauthorized: boolean;
-  };
-}
-
-const dbConfig: DatabaseConfig = {
-  connectionString: process.env.DATABASE_URL!, // URL de la base de datos del fichero .env
-  ssl: {
-    rejectUnauthorized: false,
-  },
+// Configuración de la base de datos
+const dbConfig: PoolConfig = {
+  connectionString: process.env.DATABASE_URL || "",
+  ssl: { rejectUnauthorized: false },
+  max: 5, // Limita las conexiones simultáneas
+  idleTimeoutMillis: 60000, // Cierra conexiones inactivas después de 60s
+  connectionTimeoutMillis: 5000, // Tiempo máximo de espera al conectar
 };
 
 const pool = new Pool(dbConfig);

@@ -1,13 +1,12 @@
-//import { Pool, PoolConfig, QueryResult } from 'pg';
-
-import { Pool, PoolConfig } from "pg";
-
+import pg from "pg";
 import dotenv from "dotenv"; // Importar el módulo dotenv para leer variables de entorno
 
 dotenv.config();
 
+const { Pool } = pg; // Extraemos Pool de pg
+
 // Configuración de la base de datos
-const dbConfig: PoolConfig = {
+const dbConfig = {
   connectionString: process.env.DATABASE_URL || "",
   ssl: { rejectUnauthorized: false },
   max: 5, // Limita las conexiones simultáneas

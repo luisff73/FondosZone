@@ -7,7 +7,7 @@ const { Pool } = pg; // Extraemos Pool de pg
 
 // Configuración de la base de datos
 const dbConfig = {
-  connectionString: process.env.DATABASE_URL || "",
+  connectionString: process.env.DATABASE_URL || "", // lugar donde esta la bd.
   ssl: { rejectUnauthorized: false },
   max: 5, // Limita las conexiones simultáneas
   idleTimeoutMillis: 60000, // Cierra conexiones inactivas después de 60s

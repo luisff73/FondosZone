@@ -5,10 +5,13 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import dotenv from "dotenv";
-import { db } from "./db/queries"; // Importamos las consultas
+import { db } from "./db/queries";
 import { Profile } from "passport";
-dotenv.config({ path: ".env.local" });
 import session from "express-session";
+import pgSession from "connect-pg-simple"; // Almacén de sesiones en PostgreSQL
+import pool from "./config/db.config"; // Importamos la conexión a PostgreSQL
+
+dotenv.config({ path: ".env.local" });
 
 const app: Express = express();
 const authRouter: Router = express.Router();
@@ -16,13 +19,24 @@ const authRouter: Router = express.Router();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// 🔹 Configurar sesiones con PostgreSQL
+const PgSessionStore = pgSession(session);
+
+
 app.use(
   session({
+    store: new PgSessionStore({
+      pool, // Usa la misma conexión de PostgreSQL
+      tableName: "session", // Nombre de la tabla en la BD que se utilizara para las sesiones
+    }),
     secret: process.env.SESSION_SECRET || "tu_secreto_aqui",
     resave: false,
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000, // 24 horas
     },
   })

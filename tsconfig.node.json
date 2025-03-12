@@ -10,6 +10,7 @@
     /* Configuración específica del servidor */
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
+    "noEmit": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "outDir": "dist",

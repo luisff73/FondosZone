@@ -17,7 +17,15 @@ const app: Express = express();
 const authRouter: Router = express.Router();
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost:4173", // Frontend en desarrollo (puedes agregar otros dominios según sea necesario)
+    "https://fondoszone.onrender.com", // Backend en producción
+  ],
+  credentials: true, // Permitir el envío de cookies y cabeceras de autenticación
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 🔹 Configurar sesiones con PostgreSQL
@@ -166,7 +174,7 @@ authRouter.get(
 app.use("/api/auth", authRouter);
 
 // Iniciar servidor
-const PORT: number = Number(process.env.PORT); // || 3000;
+const PORT: number = Number(process.env.PORT) || 10000;
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });

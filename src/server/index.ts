@@ -23,7 +23,6 @@ app.use(express.json());
 // 🔹 Configurar sesiones con PostgreSQL
 const PgSessionStore = pgSession(session);
 
-
 app.use(
   session({
     store: new PgSessionStore({
@@ -167,7 +166,7 @@ authRouter.get(
 app.use("/api/auth", authRouter);
 
 // Iniciar servidor
-const PORT: number = Number(process.env.PORT) || 3000;
+const PORT: number = Number(process.env.PORT); // || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });

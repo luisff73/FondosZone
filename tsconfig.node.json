@@ -9,11 +9,11 @@
     "skipLibCheck": true,
     /* Configuración específica del servidor */
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "outDir": "dist",
+    "outDir": "dist/server",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -23,6 +23,6 @@
   },
   "include": [
     "vite.config.ts",
-    "src/server/**/*"
+    "src/server/**/*",
   ]
 }

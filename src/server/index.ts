@@ -174,7 +174,7 @@ authRouter.get(
 app.use("/api/auth", authRouter);
 
 // Iniciar servidor
-const PORT: number = Number(process.env.PORT) || 10000;
+const PORT: number = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });

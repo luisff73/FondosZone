@@ -1,28 +1,18 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": [
-      "ES2023"
-    ],
     "module": "CommonJS",
-    "skipLibCheck": true,
-    /* Configuración específica del servidor */
     "moduleResolution": "node",
-    "allowImportingTsExtensions": false,
+    "outDir": "./dist/server",
     "noEmit": false,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "outDir": "dist/server",
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true
   },
   "include": [
-    "vite.config.ts",
-    "src/server/**/*",
+    "src/server/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

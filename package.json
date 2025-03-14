@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-        "build": "node ./node_modules/vite/bin/vite.js build",
+    "build": "npx vite build",
+    "server": "node ./dist/server/index.js",
     "start": "node ./dist/server/index.js",
-    "preview": "vite preview",
-    "server": "tsx watch src/server/index.ts"
+    "preview": "vite preview"
+    
   },
 
   "dependencies": {

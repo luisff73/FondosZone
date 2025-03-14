@@ -3,10 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-   "scripts": {
-    "build": "tsc -p tsconfig.node.json && vite build",
-    "start": "node ./dist/server/index.js"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "tsx watch src/server/index.ts"
+  },
+
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
     "@heroicons/react": "^2.2.0",

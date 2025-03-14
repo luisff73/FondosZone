@@ -17,19 +17,12 @@ const app: Express = express();
 const authRouter: Router = express.Router();
 
 // Middleware
-const corsOptions = {
-  origin: [
-    "http://localhost:4173", // Frontend en desarrollo (puedes agregar otros dominios según sea necesario)
-    "https://fondoszone.onrender.com", // Backend en producción
-  ],
-  credentials: true, // Permitir el envío de cookies y cabeceras de autenticación
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // 🔹 Configurar sesiones con PostgreSQL
 const PgSessionStore = pgSession(session);
+
 
 app.use(
   session({
